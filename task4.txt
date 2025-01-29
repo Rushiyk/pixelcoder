@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .column {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 30%;
+            padding: 10px;
+        }
+
+        .task {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px;
+            cursor: move;
+        }
+
+        .task.dragging {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#todo">To Do</a></li>
+            <li><a href="#in-progress">In Progress</a></li>
+            <li><a href="#done">Done</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="todo" class="column">
+            <h2>To Do</h2>
+            <div class="task" draggable="true">Task 1</div>
+            <div class="task" draggable="true">Task 2</div>
+        </section>
+
+        <section id="in-progress" class="column">
+            <h2>In Progress</h2>
+            <div class="task" draggable="true">Task 3</div>
+        </section>
+
+        <section id="done" class="column">
+            <h2>Done</h2>
+            <div class="task" draggable="true">Task 4</div>
+        </section>
+    </div>
+
+    <script>
+        const tasks = document.querySelectorAll('.task');
+        const columns = document.querySelectorAll('.column');
+
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', () => {
+                task.classList.add('dragging');
+            });
+
+            task.addEventListener('dragend', () => {
+                task.classList.remove('dragging');
+            });
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const draggingTask = document.querySelector('.dragging');
+                column.appendChild(draggingTask);
+            });
+        });
+    </script>
+</body>
+</html>
